@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>woofy — Your dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dashboard-page">
+  <div class="app-shell">
+    <header class="app-nav">
+      <a class="logo" href="index.html" aria-label="woofy home">
+        <img class="logo-image" src="assets/images/woofy-logo.jpeg" alt="woofy puppy logo">
+        <span>woofy</span>
+      </a>
+      <div class="dashboard-user"><img id="dashboardProfileAvatar" class="account-avatar" alt="Your profile picture" hidden><span id="dashboardRole">pet parent</span><strong id="dashboardUserName">friend</strong><button class="btn btn-light" id="logout" type="button">Log out</button></div>
+    </header>
+
+    <div class="app-main">
+      <aside class="sidebar" aria-label="Dashboard navigation">
+        <a class="side-link active" href="#overview">🏡 Overview</a>
+        <a class="side-link" href="#notifications">🔔 Notifications <span class="notification-nav-count" id="notificationNavCount" hidden>0</span></a>
+        <a class="side-link" data-role="pet_parent" href="#pets">🐾 My pets</a>
+        <a class="side-link" data-role="pet_parent" href="#appointments">🗓️ Appointments</a>
+        <a class="side-link" data-role="pet_parent" href="#vaccinations">💉 Vaccinations</a>
+        <a class="side-link" data-role="pet_parent" href="#health">💗 Medical records</a>
+        <a class="side-link" data-role="pet_parent" href="#parentMessages">💬 Contact vet</a>
+        <a class="side-link" data-role="pet_parent" href="#emergencyHelp">🆘 Emergency help</a>
+        <a class="side-link" data-role="pet_parent" href="#profilePanel">📍 My details</a>
+        <a class="side-link" data-role="pet_parent" href="#" data-open-woofy-chat>✨ woofy AI</a>
+        <a class="side-link" data-role="veterinarian" href="#vet-appointments" hidden>🗓️ Appointments</a>
+        <a class="side-link" data-role="veterinarian" href="#vet-patients" hidden>🐾 Patients</a>
+        <a class="side-link" data-role="veterinarian" href="#vet-vaccinations" hidden>💉 Vaccinations</a>
+        <a class="side-link" data-role="veterinarian" href="#vet-records-form-panel" hidden>🩺 Medical records</a>
+        <a class="side-link" data-role="veterinarian" href="#vet-schedule" hidden>⏰ Schedule</a>
+        <a class="side-link" data-role="veterinarian" href="#vetMessages" hidden>💬 Messages</a>
+        <a class="side-link" data-role="veterinarian" href="#profilePanel" hidden>📍 Clinic details</a>
+        <a class="side-link" data-role="administrator" href="#adminOverview" hidden>📊 Admin overview</a>
+        <a class="side-link" data-role="administrator" href="#adminUsers" hidden>👥 User management</a>
+        <a class="side-link" data-role="administrator" href="#adminAppointments" hidden>🗓️ Appointments</a>
+        <a class="side-link" data-role="administrator" href="#adminAnnouncements" hidden>📣 Announcements</a>
+      </aside>
+
+      <main class="dash-main" id="overview">
+        <section class="welcome">
+          <span class="tag">✧ your little pet-care corner</span>
+          <h1>Hey, <span id="welcomeName">bestie</span>! 🐾</h1>
+          <p id="dashboardIntro">Your pet's world, all in one happy little place.</p>
+        </section>
+
+        <section class="app-grid notifications-grid" id="notifications">
+          <article class="app-panel wide notification-panel">
+            <div class="panel-heading"><div><span class="section-kicker">little nudges, right on time</span><h2>Notifications & reminders 🔔</h2></div><button class="btn btn-light" id="markAllNotificationsRead" type="button">Mark all as read</button></div>
+            <p class="form-hint">Appointment updates, messages and upcoming care reminders all live here.</p>
+            <div id="notificationList" class="notification-list" aria-live="polite"><p class="empty-state">You're all caught up!</p></div>
+          </article>
+        </section>
+
+        <section class="app-grid" id="petParentPanels">
+          <article class="app-panel wide" id="pets">
+            <div class="panel-heading"><div><span class="section-kicker">the main characters</span><h2>My pets</h2></div><button class="btn btn-dark" id="showPetForm" type="button">+ Add a pet</button></div>
+            <form id="addPetForm" class="add-pet-form" hidden>
+              <input id="petName" required maxlength="40" placeholder="Pet's name" aria-label="Pet name">
+              <select id="petType" required aria-label="Pet type">
+                <option value="">Choose an animal</option>
+                <option value="Dog">🐶 Dog</option>
+                <option value="Cat">🐱 Cat</option>
+                <option value="Bird">🦜 Bird</option>
+                <option value="Rabbit">🐰 Rabbit</option>
+                <option value="Hamster">🐹 Hamster</option>
+                <option value="Guinea pig">🐹 Guinea pig</option>
+                <option value="Ferret">🦦 Ferret</option>
+                <option value="Reptile">🦎 Reptile</option>
+                <option value="Turtle">🐢 Turtle / tortoise</option>
+                <option value="Fish">🐠 Fish</option>
+                <option value="Horse">🐴 Horse</option>
+                <option value="Goat">🐐 Goat</option>
+                <option value="Sheep">🐑 Sheep</option>
+                <option value="Pig">🐷 Pig</option>
+                <option value="Chicken">🐔 Chicken</option>
+                <option value="Duck">🦆 Duck</option>
+                <option value="Other">✨ Other</option>
+              </select>
+              <input id="petCustomType" maxlength="40" placeholder="What animal is your pet?" aria-label="Enter your animal type" hidden>
+              <input id="petBreed" maxlength="50" placeholder="Breed (optional)" aria-label="Pet breed">
+              <input id="petAge" type="number" min="0" max="40" step="0.5" placeholder="Age in years" aria-label="Pet age in years">
+              <input id="petWeight" type="number" min="0.1" max="300" step="0.1" placeholder="Weight in kg (optional)" aria-label="Pet weight in kilograms">
+              <label class="pet-photo-field" for="petPhoto"><span>Profile picture (optional)</span><input id="petPhoto" type="file" accept="image/*" aria-label="Upload pet profile picture"></label>
+              <img id="petPhotoPreview" class="pet-photo-preview" alt="Pet photo preview" hidden>
+              <input id="petNotes" maxlength="180" placeholder="A little note (optional)" aria-label="A little note about your pet">
+              <button class="btn btn-dark" id="savePetButton" type="submit">Save pet</button>
+              <button class="btn btn-light" id="cancelPetEdit" type="button" hidden>Cancel</button>
+            </form>
+            <div class="pet-list" id="petList">
+              <div class="pet-tile"><img src="https://images.unsplash.com/photo-1558788353-f76d92427f16?auto=format&fit=crop&w=120&q=80" alt="Golden retriever"><div><strong>Bruno</strong><small>Golden Retriever · Demo profile</small></div></div>
+            </div>
+            <p class="demo-note">Your pets, their little details and their care history — all together.</p>
+          </article>
+
+          <article class="app-panel wide" id="appointments">
+            <div class="panel-heading">
+              <div><span class="section-kicker">time for a check-up?</span><h2>Appointments 🗓️</h2></div>
+            </div>
+            <div class="appointment-layout">
+            <form id="appointmentForm" class="appointment-form appointment-booking-form">
+              <label for="appointmentPet">Who's visiting?</label>
+              <select id="appointmentPet" required><option value="">Choose your pet</option></select>
+              <label for="appointmentVet">Choose a veterinarian</label>
+              <select id="appointmentVet" required><option value="">Choose a vet</option></select>
+              <label for="appointmentDate">Date & time</label>
+              <input id="appointmentDate" type="datetime-local" required>
+              <div class="appointment-availability-panel" id="appointmentAvailabilityHint" role="status" aria-live="polite" data-state="neutral"><span class="availability-title">Vet availability</span><span class="availability-message">Choose a veterinarian to see their clinic hours.</span></div>
+              <label for="appointmentReason">What do they need?</label>
+              <textarea id="appointmentReason" rows="3" maxlength="300" placeholder="e.g. Annual check-up, vaccination, tummy trouble…" required></textarea>
+              <button class="btn btn-dark" id="bookAppointmentButton" type="submit">Request appointment 🐾</button>
+              <p class="form-hint" id="appointmentFormHint">Add a pet profile and make sure a veterinarian account is registered before booking.</p>
+            </form>
+            <div class="appointment-list-wrap">
+              <h3>Your appointment requests</h3>
+              <p class="form-hint">Track confirmations, changes and cancellations in one place.</p>
+              <div id="parentAppointmentList" class="appointment-list" aria-live="polite"><p class="empty-state">Your appointment requests will show up here.</p></div>
+            </div>
+            </div>
+          </article>
+
+          <article class="app-panel wide" id="vaccinations">
+            <div class="panel-heading"><div><span class="section-kicker">tiny jabs, big protection</span><h2>Vaccination tracker 💉</h2></div></div>
+            <p class="form-hint">Keep an eye on each pet's vaccine history and upcoming due dates. Your veterinarian should confirm the right vaccination schedule.</p>
+            <div id="parentVaccinationSummary" class="vaccination-summary" aria-live="polite"></div>
+            <div id="parentVaccinationList" class="vaccination-list" aria-live="polite"><p class="empty-state">Your vaccination records will appear here when your vet adds them.</p></div>
+          </article>
+
+          <article class="app-panel" id="health">
+            <span class="section-kicker">little health things</span><h2>Medical records 💗</h2>
+            <p class="form-hint">Records added by your veterinarian will appear here, linked to each pet.</p>
+            <div id="parentMedicalRecords" class="medical-record-list" aria-live="polite"><p class="empty-state">No medical records yet. Your vet can add the first one after a visit.</p></div>
+          </article>
+          <article class="app-panel wide" id="parentMessages">
+            <span class="section-kicker">a little help from your vet</span><h2>Contact your vet 💬</h2>
+            <p class="form-hint">Send a non-emergency message about one of your pets. For urgent symptoms, use Emergency Help instead.</p>
+            <form id="parentMessageForm" class="appointment-form">
+              <label for="messagePet">Pet</label><select id="messagePet" required><option value="">Choose your pet</option></select>
+              <label for="messageVet">Veterinarian</label><select id="messageVet" required><option value="">Choose a veterinarian</option></select>
+              <label for="parentMessageText">Your message</label><textarea id="parentMessageText" rows="3" maxlength="1200" required placeholder="Tell your vet what's going on…"></textarea>
+              <button class="btn btn-dark" type="submit">Send message 🐾</button>
+              <p class="form-hint">Messaging is currently limited to this local development environment. Cross-device conversations will be enabled when the database-backed messaging workflow is connected.</p>
+            </form>
+            <div id="parentMessageThreads" class="message-thread-list" aria-live="polite"></div>
+          </article>
+          <article class="app-panel wide" id="emergencyHelp">
+            <span class="section-kicker">when a little help can't wait</span>
+            <h2>Emergency help 🆘</h2>
+            <p class="emergency-intro">If your pet may be seriously unwell or injured, contact a veterinary professional immediately. Please don't wait for an in-app reply.</p>
+
+            <div class="emergency-contact-grid">
+              <section class="emergency-contact-card emergency-contact-1962">
+                <div class="emergency-contact-copy">
+                  <span class="emergency-contact-label">Animal mobile medical help</span>
+                  <h3>1962</h3>
+                  <p>Animal Mobile Medical Ambulance helpline. Service availability depends on your state and district.</p>
+                </div>
+                <a class="btn btn-dark emergency-call-link" href="tel:1962" aria-label="Call the animal mobile medical ambulance helpline at 1962">Call 1962</a>
+              </section>
+              <section class="emergency-contact-card emergency-contact-peta">
+                <div class="emergency-contact-copy">
+                  <span class="emergency-contact-label">Animal welfare support</span>
+                  <h3>PETA India</h3>
+                  <p>Call for animal-welfare assistance. Outside its service areas, callers may be referred to local help.</p>
+                </div>
+                <a class="btn btn-light emergency-call-link" href="tel:+919820122602" aria-label="Call PETA India at plus 91 98201 22602">Call +91 98201 22602</a>
+              </section>
+            </div>
+            <p class="form-hint emergency-disclaimer">Call buttons open your device's phone app. A computer needs a calling app to place calls. Neither number guarantees ambulance dispatch or immediate assistance.</p>
+
+            <section class="emergency-vet-section">
+              <div class="emergency-subheading">
+                <div><h3>Find a woofy veterinarian</h3><p>Contact a veterinarian registered on woofy.</p></div>
+              </div>
+              <div id="emergencyVetList" class="emergency-vet-list"></div>
+            </section>
+
+            <section class="emergency-location-card">
+              <div><h3>Share your location</h3><p class="form-hint" id="emergencyLocationStatus" role="status">Your location is only requested when you tap the button.</p></div>
+              <button class="btn btn-light" id="shareEmergencyLocation" type="button">Share my current location</button>
+            </section>
+          </article>
+        </section>
+
+        <section class="pet-dashboard-view" id="petDashboardView" hidden aria-live="polite">
+          <button class="btn btn-light pet-dashboard-back" id="backToPets" type="button">← Back to pets</button>
+          <div class="pet-dashboard-hero" id="petDashboardHero"></div>
+          <div class="pet-dashboard-grid">
+            <article class="app-panel"><span class="section-kicker">little life details</span><h2>Pet profile 🐾</h2><div id="petDashboardProfile"></div></article>
+            <article class="app-panel"><span class="section-kicker">coming up & keeping well</span><h2>Appointments 🗓️</h2><div id="petDashboardAppointments" class="appointment-list"></div></article>
+            <article class="app-panel"><span class="section-kicker">tiny jabs, big protection</span><h2>Vaccinations 💉</h2><div id="petDashboardVaccinations" class="vaccination-list"></div></article>
+            <article class="app-panel"><span class="section-kicker">their health story</span><h2>Medical records 💗</h2><div id="petDashboardRecords" class="medical-record-list"></div></article>
+          </div>
+          <button class="btn btn-dark" id="askWoofyAboutPet" type="button">Ask woofy about this pet ✨</button>
+        </section>
+
+        <section class="app-grid" id="vetPanels" hidden>
+          <article class="app-panel wide" id="vet-records"><span class="section-kicker">clinic workspace</span><h2>Welcome to your woofy clinic space 🩺</h2><p>Your clinic workspace is being prepared for connected patient and clinical records.</p></article>
+          <article class="app-panel wide" id="vet-appointments">
+            <span class="section-kicker">your clinic inbox</span><h2>Appointment requests 🗓️</h2>
+            <p class="form-hint">Review requests from pet parents and update their status.</p>
+            <div id="vetAppointmentList" class="appointment-list" aria-live="polite"><p class="empty-state">No appointment requests yet.</p></div>
+          </article>
+          <article class="app-panel wide" id="vet-patients">
+            <span class="section-kicker">your patients</span><h2>Patient records 🐾</h2>
+            <p class="form-hint">Pets linked to appointment requests sent to your account.</p>
+            <div id="vetPatientList" class="patient-list"><p class="empty-state">Patient profiles will appear here when pet parents book with you.</p></div>
+          </article>
+          <article class="app-panel wide" id="vet-vaccinations">
+            <span class="section-kicker">prevention is pretty powerful</span><h2>Vaccination records 💉</h2>
+            <p class="form-hint">Add or update vaccine details for pets with a confirmed appointment at your clinic.</p>
+            <form id="vaccinationForm" class="appointment-form medical-record-form">
+              <label for="vaccinationPet">Patient</label><select id="vaccinationPet" required><option value="">Choose a patient</option></select>
+              <label for="vaccineName">Vaccine name</label><input id="vaccineName" maxlength="100" required placeholder="e.g. Rabies, DHPP, FVRCP">
+              <label for="vaccineDate">Date administered</label><input id="vaccineDate" type="date" required>
+              <label for="vaccineDueDate">Next due date (optional)</label><input id="vaccineDueDate" type="date">
+              <label for="vaccineBatch">Batch / lot number (optional)</label><input id="vaccineBatch" maxlength="80" placeholder="Vaccine batch reference">
+              <label for="vaccineNotes">Notes (optional)</label><textarea id="vaccineNotes" rows="3" maxlength="600" placeholder="Any relevant observations or follow-up advice…"></textarea>
+              <button class="btn btn-dark" id="saveVaccinationButton" type="submit">Save vaccination 🐾</button>
+              <button class="btn btn-light" id="cancelVaccinationEdit" type="button" hidden>Cancel edit</button>
+              <p class="form-hint" id="vaccinationFormHint">A confirmed appointment is needed before adding a vaccination record.</p>
+            </form>
+            <h3 class="vaccination-subheading">Saved vaccination records</h3>
+            <div id="vetVaccinationList" class="vaccination-list" aria-live="polite"><p class="empty-state">No vaccination records have been added yet.</p></div>
+          </article>
+          <article class="app-panel wide" id="vet-records-form-panel">
+            <span class="section-kicker">care notes</span><h2>Add a medical record 🩺</h2>
+            <p class="form-hint">Save visit notes for a pet connected to one of your appointments.</p>
+            <form id="medicalRecordForm" class="appointment-form medical-record-form">
+              <label for="recordPet">Patient</label><select id="recordPet" required><option value="">Choose a patient</option></select>
+              <label for="recordType">Record type</label><select id="recordType" required><option value="">Choose a type</option><option>Consultation</option><option>Vaccination</option><option>Prescription</option><option>Lab result</option><option>Other</option></select>
+              <label for="recordTitle">Record title</label><input id="recordTitle" maxlength="80" required placeholder="e.g. Annual wellness examination">
+              <label for="recordDate">Visit date</label><input id="recordDate" type="date" required>
+              <label for="recordNotes">Veterinarian notes</label><textarea id="recordNotes" rows="3" maxlength="1000" required placeholder="Findings, advice and follow-up details…"></textarea>
+              <label for="recordPrescription">Prescription / care plan (optional)</label><textarea id="recordPrescription" rows="2" maxlength="600" placeholder="Medication, dosage as prescribed, or home-care instructions…"></textarea>
+              <button class="btn btn-dark" type="submit">Save medical record 🐾</button>
+              <p class="form-hint" id="recordFormHint">Choose a patient linked to one of your appointments.</p>
+            </form>
+          </article>
+          <article class="app-panel wide" id="vet-records-list-panel">
+            <span class="section-kicker">your saved notes</span><h2>Recent medical records</h2>
+            <div id="vetMedicalRecords" class="medical-record-list" aria-live="polite"><p class="empty-state">No records have been added yet.</p></div>
+          </article>
+          <article class="app-panel wide" id="vet-schedule">
+            <span class="section-kicker">clinic tools</span><h2>Schedule & availability 🕒</h2>
+            <p class="form-hint">Set the hours when pet parents can request appointments. Your published hours are used to check appointment requests in this development build.</p>
+            <div id="vetScheduleSummary" class="vet-schedule-summary" hidden></div>
+            <form id="vetWeeklyScheduleForm" class="vet-schedule-form" hidden>
+              <div class="schedule-form-heading"><strong>Weekly clinic hours</strong><span>Choose the days and times you are available.</span></div>
+              <div class="vet-schedule-days">
+                <div class="vet-schedule-day" data-day="monday"><label><input type="checkbox" name="monday-enabled"> Monday</label><input type="time" name="monday-open" value="09:00" aria-label="Monday opening time"><span>to</span><input type="time" name="monday-close" value="17:00" aria-label="Monday closing time"></div>
+                <div class="vet-schedule-day" data-day="tuesday"><label><input type="checkbox" name="tuesday-enabled"> Tuesday</label><input type="time" name="tuesday-open" value="09:00" aria-label="Tuesday opening time"><span>to</span><input type="time" name="tuesday-close" value="17:00" aria-label="Tuesday closing time"></div>
+                <div class="vet-schedule-day" data-day="wednesday"><label><input type="checkbox" name="wednesday-enabled"> Wednesday</label><input type="time" name="wednesday-open" value="09:00" aria-label="Wednesday opening time"><span>to</span><input type="time" name="wednesday-close" value="17:00" aria-label="Wednesday closing time"></div>
+                <div class="vet-schedule-day" data-day="thursday"><label><input type="checkbox" name="thursday-enabled"> Thursday</label><input type="time" name="thursday-open" value="09:00" aria-label="Thursday opening time"><span>to</span><input type="time" name="thursday-close" value="17:00" aria-label="Thursday closing time"></div>
+                <div class="vet-schedule-day" data-day="friday"><label><input type="checkbox" name="friday-enabled"> Friday</label><input type="time" name="friday-open" value="09:00" aria-label="Friday opening time"><span>to</span><input type="time" name="friday-close" value="17:00" aria-label="Friday closing time"></div>
+                <div class="vet-schedule-day" data-day="saturday"><label><input type="checkbox" name="saturday-enabled"> Saturday</label><input type="time" name="saturday-open" value="09:00" aria-label="Saturday opening time"><span>to</span><input type="time" name="saturday-close" value="13:00" aria-label="Saturday closing time"></div>
+                <div class="vet-schedule-day" data-day="sunday"><label><input type="checkbox" name="sunday-enabled"> Sunday</label><input type="time" name="sunday-open" value="09:00" aria-label="Sunday opening time"><span>to</span><input type="time" name="sunday-close" value="13:00" aria-label="Sunday closing time"></div>
+              </div>
+              <div class="schedule-form-actions"><button class="btn btn-dark" type="submit">Save clinic hours</button><p class="form-hint" id="vetScheduleStatus" role="status">No clinic hours saved yet.</p></div>
+            </form>
+            <div class="vet-schedule-appointments">
+              <h3>Upcoming appointments</h3>
+              <div id="vetScheduleAppointments" class="appointment-list" aria-live="polite"><p class="empty-state">Your upcoming appointments will appear here.</p></div>
+            </div>
+          </article>
+          <article class="app-panel wide" id="vetMessages">
+            <span class="section-kicker">pet parents are reaching out</span><h2>Messages 💬</h2>
+            <p class="form-hint">Reply to non-emergency messages from pet parents. Messages are currently limited to this local development environment. Shared clinic messaging is part of the database integration.</p>
+            <div id="vetMessageThreads" class="message-thread-list" aria-live="polite"></div>
+          </article>
+        </section>
+
+        <section class="app-grid admin-panels" id="adminPanels" hidden>
+          <article class="app-panel wide" id="adminOverview">
+            <span class="section-kicker">the big picture</span><h2>Administrator dashboard 📊</h2>
+            <p class="form-hint">A bird's-eye view of the woofy community and its activity.</p>
+            <div class="admin-stat-grid" id="adminStatGrid"></div>
+            <div class="admin-activity-block"><h3>Recent platform activity</h3><div id="adminRecentActivity" class="admin-activity-list"></div></div>
+          </article>
+          <article class="app-panel wide" id="adminUsers">
+            <span class="section-kicker">the humans behind the paws</span><h2>User management 👥</h2>
+            <p class="form-hint">Review veterinarian registrations and manage account access.</p>
+            <div id="adminUsersList" class="admin-table-wrap"></div>
+          </article>
+          <article class="app-panel wide" id="adminAppointments">
+            <span class="section-kicker">all the check-ups</span><h2>Appointment management 🗓️</h2>
+            <p class="form-hint">Review appointment requests across the platform and update their status.</p>
+            <div id="adminAppointmentsList" class="admin-table-wrap"></div>
+          </article>
+          <article class="app-panel wide" id="adminAnnouncements">
+            <span class="section-kicker">a note from woofy HQ</span><h2>Platform announcements 📣</h2>
+            <form id="adminAnnouncementForm" class="appointment-form admin-announcement-form">
+              <label for="adminAnnouncementTitle">Announcement title</label><input id="adminAnnouncementTitle" maxlength="90" required placeholder="e.g. Holiday clinic hours">
+              <label for="adminAnnouncementMessage">Message</label><textarea id="adminAnnouncementMessage" rows="3" maxlength="500" required placeholder="Write an update for the woofy community…"></textarea>
+              <button class="btn btn-dark" type="submit">Send announcement</button>
+            </form>
+          </article>
+        </section>
+
+        <section class="app-grid profile-panel" id="profilePanel">
+          <article class="app-panel wide">
+            <span class="section-kicker">your contact & location details</span><h2>My details 📍</h2>
+            <p class="form-hint">Add a phone number and general location to help with contact and local care. A full home address is optional.</p>
+            <form id="profileDetailsForm" class="profile-details-form">
+              <label class="profile-photo-upload" for="profilePhoto">Profile picture (optional)<input id="profilePhoto" type="file" accept="image/*"><span>Choose a photo</span></label>
+              <img id="profilePhotoPreview" class="profile-photo-preview" alt="Profile picture preview" hidden>
+              <label for="profilePhone">Phone number</label><input id="profilePhone" type="tel" maxlength="20" autocomplete="tel" placeholder="e.g. +91 98765 43210">
+              <label for="profileCity">City / town</label><input id="profileCity" maxlength="80" autocomplete="address-level2" placeholder="Your city or town">
+              <label for="profileDistrict">District</label><input id="profileDistrict" maxlength="80" placeholder="Your district">
+              <label for="profileState">State</label><input id="profileState" maxlength="80" autocomplete="address-level1" placeholder="Your state">
+              <label for="profilePincode">PIN code</label><input id="profilePincode" inputmode="numeric" maxlength="6" autocomplete="postal-code" placeholder="6-digit PIN code">
+              <label for="profileAddress">Home / clinic address (optional)</label><textarea id="profileAddress" rows="2" maxlength="300" autocomplete="street-address" placeholder="Only add this if you want it saved to your profile"></textarea>
+              <button class="btn btn-dark" type="submit">Save my details</button>
+              <p class="form-hint" id="profileDetailsStatus" role="status">Your details are saved.</p>
+            </form>
+          </article>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Floating woofy AI companion -->
+  <button class="woofy-fab" id="woofyFab" type="button"
+          aria-label="Open woofy AI chat" aria-controls="woofyWidget" aria-expanded="false">
+    <span class="woofy-fab-face" aria-hidden="true">🐶</span>
+    <span class="woofy-fab-sparkle" aria-hidden="true">✦</span>
+    <span class="woofy-fab-label">Ask woofy</span>
+  </button>
+
+  <section class="woofy-widget" id="woofyWidget" aria-label="woofy AI chat" aria-hidden="true" hidden>
+    <header class="woofy-widget-header">
+      <div class="woofy-widget-brand">
+        <span class="woofy-widget-avatar" aria-hidden="true">🐾</span>
+        <span><strong>woofy AI</strong><small>Your bubbly pet-care buddy</small></span>
+      </div>
+      <div class="woofy-widget-actions">
+        <button class="woofy-widget-icon" id="woofyClearChat" type="button" aria-label="Clear this conversation" title="Clear this conversation">↻</button>
+        <button class="woofy-widget-icon" id="woofyClose" type="button" aria-label="Close chat" title="Close chat">×</button>
+      </div>
+    </header>
+
+    <div class="woofy-pet-context">
+      <label for="woofyPetContext">Talking about</label>
+      <select id="woofyPetContext" aria-label="Choose which pet woofy should use as context">
+        <option value="">No specific pet</option>
+        <option value="all">All pets</option>
+      </select>
+      <span>Choose a pet to focus woofy's answers on them.</span>
+    </div>
+    <div class="woofy-widget-messages" id="woofyWidgetMessages" aria-live="polite" aria-relevant="additions">
+      <div class="woofy-widget-message bot">
+        <span class="message-paw" aria-hidden="true">🐾</span>
+        <p>I'm all ears (and paws)! I can help with general care tips and explain the pet-care info saved in your woofy account. 💛</p>
+      </div>
+    </div>
+    <div class="woofy-widget-suggestions" id="woofyWidgetSuggestions">
+      <button type="button" data-ai-question="Can you summarise my pet's upcoming care reminders?">📅 My reminders</button>
+      <button type="button" data-ai-question="How can I prepare for my pet's next vet visit?">🩺 Vet visit prep</button>
+      <button type="button" data-ai-question="Share some safe indoor enrichment ideas for my pet.">🎾 Play ideas</button>
+    </div>
+    <form class="woofy-widget-form" id="woofyWidgetForm">
+      <label class="sr-only" for="woofyWidgetQuestion">Your question for woofy</label>
+      <input id="woofyWidgetQuestion" type="text" maxlength="500" autocomplete="off"
+             placeholder="Ask your furry little questions..." required>
+      <button type="submit" aria-label="Send message">➤</button>
+    </form>
+    <p class="woofy-widget-disclaimer">Friendly guidance, not a diagnosis. For symptoms or urgent concerns, contact a veterinarian.</p>
+    <div class="woofy-api-status" id="woofyApiStatus" role="status">Connecting to woofy…</div>
+  </section>
+
+  <dialog class="woofy-confirm-dialog" id="appointmentCancelDialog" aria-labelledby="appointmentCancelTitle" aria-describedby="appointmentCancelMessage">
+    <div class="confirm-dialog-content">
+      <span class="confirm-dialog-icon" aria-hidden="true">🐾</span>
+      <h2 id="appointmentCancelTitle">Cancel this appointment?</h2>
+      <p id="appointmentCancelMessage">Are you sure you want to cancel this appointment?</p>
+      <div class="confirm-dialog-actions">
+        <button class="btn btn-light" id="keepAppointmentButton" type="button">Keep appointment</button>
+        <button class="btn btn-dark" id="confirmCancelAppointmentButton" type="button">Yes, cancel it</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

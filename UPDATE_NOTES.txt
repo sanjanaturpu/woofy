@@ -1,0 +1,163 @@
+WOOFY — ADMIN DASHBOARD, ROLE ACCESS & NOTIFICATIONS UPDATE
+
+Replace these existing files:
+- dashboard.html
+- script.js
+- style.css
+- login.html
+- register.html
+
+Add this new file:
+- admin-setup.html
+
+WHAT'S INCLUDED
+1. Administrator dashboard
+   - Overview cards for registered users, pet parents, veterinarians, pets, appointments and pending vet reviews.
+   - User management with veterinarian approval/rejection and account suspend/reactivate controls.
+   - Platform-wide appointment list with confirm/cancel actions.
+   - Announcement composer that creates notifications for registered users in this browser.
+
+2. Role-based dashboard experience
+   - Pet Parent, Veterinarian and Administrator have separate navigation and dashboard panels.
+   - Public registration offers Pet Parent and Veterinarian only.
+   - Newly registered veterinarian accounts start as Pending and are excluded from parent booking/contact directories until approved.
+   - Pending vets can complete clinic schedule/profile details while waiting. Rejected vets cannot access patient-facing clinic tools.
+   - Suspended accounts are blocked at login/dashboard entry.
+   - The dashboard refreshes the active role from the registered local account record rather than trusting only the current-session role field.
+
+3. Notifications and care reminders
+   - Appointment request, confirmation, decline and cancellation notifications.
+   - New message/reply notifications.
+   - Vaccination record update notifications.
+   - Upcoming appointment reminder when the user opens the dashboard within 24 hours of an appointment.
+   - Vaccination due-soon reminders (within 30 days) and overdue reminders.
+   - Unread count, mark-as-read and mark-all-as-read controls.
+   - Administrator announcements.
+
+4. First administrator setup
+   - New admin-setup.html page creates the first administrator account in the current browser.
+   - Once an administrator exists in this browser, the setup form is disabled.
+   - Log in with the created administrator account to access the admin dashboard.
+
+INSTALLATION
+1. Back up your current Woofy project folder.
+2. Replace the five existing files listed above.
+3. Add admin-setup.html beside index.html, login.html, register.html and dashboard.html.
+4. Run the project with Live Server.
+5. Open admin-setup.html once to create your first local administrator, then log in with that account.
+6. Register a veterinarian using a separate account. Log in as admin and approve the vet under User management. Log out and log back in as the vet to see the approved clinic workspace.
+
+IMPORTANT PROTOTYPE LIMITATIONS
+- This is still a browser/localStorage prototype. It is not secure production authentication or authorization. Users can alter browser storage; real enforcement must be implemented in FastAPI on the server.
+- Passwords are still stored in localStorage in the existing prototype. Do not use real or reused passwords. Password hashing and JWT/session handling belong in the backend phase.
+- Admin setup is a local development bootstrap, not a secure public administrator provisioning flow. Replace it with a server-controlled process before deployment.
+- Notifications are stored in the same browser. They do not sync across devices or separate browsers.
+- Reminder generation runs when the relevant user's dashboard is opened. There are no background jobs, browser push notifications, email or SMS delivery yet.
+- Existing veterinarian accounts without a vetApproval field are treated as approved for backwards compatibility. Newly registered vets require approval.
+- The database is not connected in this update. PostgreSQL/FastAPI integration remains the next phase.
+
+CHECKS PERFORMED
+- JavaScript syntax check with Node.js: passed.
+- HTML parsing and duplicate-ID checks: passed for all HTML pages.
+- CSS opening/closing brace balance: passed.
+- Browser interaction, multi-account workflow and cross-device tests: not performed here; please test locally.
+
+
+============================================================
+2026-11-01 — WOOFY POLISH + POSTGRESQL API FOUNDATION
+============================================================
+
+SOURCE OF TRUTH
+- Work was performed only from the supplied WOOFY_.zip archive.
+- No files from earlier project archives were merged.
+
+FRONTEND POLISH
+- Changed visible product-name references to lowercase "woofy".
+- Removed the public administrator setup link from the login page.
+- Replaced the old browser-local administrator setup form with instructions
+  for the protected backend bootstrap process.
+- Removed the profile status copy that described browser-local saving.
+- Improved wording around local-development limitations without claiming
+  cross-device functionality that is not connected yet.
+- Added consistent spacing below the notifications section.
+- Explicitly centered the appointment cancellation dialog in the viewport.
+- Preserved the existing cancellation dialog interaction and styling.
+
+POSTGRESQL API FOUNDATION
+- Added backend/database.py for SQLAlchemy PostgreSQL connection/session setup.
+- Added backend/models.py for users, profiles, pets, vet schedules, appointments,
+  medical records, vaccinations, conversations, messages, notifications and
+  announcements.
+- Added backend/security.py for Argon2 password hashing and JWT tokens.
+- Expanded backend/main.py with registration/login, protected current-user,
+  role-checked data routes, one-time administrator bootstrap, administrator
+  management, persisted notifications and the existing Ollama AI endpoint.
+- Added PostgreSQL, SQLAlchemy, JWT, Argon2 and email validation dependencies.
+- Added .env.example and updated backend/README.md with setup instructions.
+
+SECURITY DECISIONS
+- Public registration can create Pet Parent and Veterinarian accounts only.
+- New veterinarian accounts start pending administrator approval.
+- The initial administrator bootstrap requires WOOFY_ADMIN_SETUP_KEY and is
+  serialized with a PostgreSQL advisory transaction lock to prevent concurrent
+  first-admin creation.
+- Additional administrators can only be created through an authenticated
+  administrator endpoint.
+- Protected API routes use JWT authentication and server-side role/ownership
+  checks. Passwords are stored as Argon2 hashes.
+- Veterinarian access to patient records is limited to pets with an accepted
+  appointment relationship.
+
+IMPORTANT INTEGRATION STATUS
+- This is the PostgreSQL-backed API foundation, not the completed frontend
+  database migration. The existing dashboard data workflows in script.js
+  still use browser localStorage for application data and the old local demo
+  login/registration handlers. The API endpoints are not yet wired into those
+  dashboard workflows.
+- The old browser-local administrator setup handler has been removed. Use the
+  protected backend bootstrap endpoint described in backend/README.md.
+- Woofy AI still accepts browser-supplied context at this stage. Its context
+  must be loaded server-side from the authenticated account before production.
+- Database tables are created automatically for local development. Alembic
+  migrations, automated integration tests, scheduled background reminders,
+  and full frontend API migration remain outstanding.
+
+CHECKS
+- JavaScript syntax check: passed.
+- Python bytecode compilation: passed.
+- HTML parsing and duplicate-ID checks: to be completed after packaging.
+- PostgreSQL runtime tests: not run because a configured PostgreSQL service
+  and the new backend dependencies are not available in this workspace.
+
+
+============================================================
+2026-11-02 — EXISTING FRONTEND CONNECTED TO POSTGRESQL API
+============================================================
+
+CHANGED EXISTING FILES
+- script.js: registration and login now use FastAPI; JWT token is stored for
+  authenticated API requests; dashboard verifies the session with /api/auth/me
+  and loads database records into a temporary view cache. Pet CRUD, appointment
+  booking/status changes, veterinarian schedules, medical records, vaccinations,
+  profile updates, notifications, parent-vet messages, administrator actions,
+  announcements and Woofy AI conversation history now call backend APIs.
+- register.html: password minimum now matches backend policy (10 characters).
+- backend/main.py: CORS permits common Live Server ports; appointment, medical
+  record, vaccination and conversation lists return UI-friendly related names;
+  vaccination update/delete routes added; clinical changes create notifications;
+  pending veterinarians may save clinic hours before approval; AI conversation
+  deletion route added.
+- backend/security.py: removed temporary JWT diagnostic prints.
+- backend/README.md: updated integration status and added browser/database
+  smoke-test instructions.
+
+IMPORTANT
+- The existing visual pages and CSS were preserved. No separate demo page is
+  required; use the original index/login/register/dashboard flow.
+- localStorage remains only as a rendering cache and for non-authoritative UI
+  state. The backend/PostgreSQL APIs are the source of truth for migrated data.
+- This integration has passed JavaScript syntax and Python compilation checks.
+  A live browser + PostgreSQL + Ollama end-to-end test must still be performed
+  on the development computer. Existing localStorage-only reminders and any
+  workflow not covered by the smoke test should not be represented as fully
+  verified.

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>woofy — Create your account</title>
+  <meta name="description" content="Create your woofy pet-care account.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-art">
+        <div>
+          <a class="back-home" href="index.html">← back to woofy</a>
+          <h1>your pet's<br>new home. 🐾</h1>
+          <p>One tiny account. One very organized pet-care life. And yes, they are still the main character.</p>
+        </div>
+        <div class="auth-emoji">🐶 🐱</div>
+      </div>
+
+      <div class="auth-form">
+        <h2>let's get started.</h2>
+        <p>Create your woofy account in a minute.</p>
+
+        <form id="registerForm">
+          <div class="field">
+            <label for="name">YOUR NAME</label>
+            <input id="name" name="name" required type="text" autocomplete="name" placeholder="e.g. Sanjana">
+          </div>
+
+          <div class="field">
+            <label for="email">EMAIL</label>
+            <input id="email" name="email" required type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+
+          <div class="field">
+            <label for="password">PASSWORD</label>
+            <input id="password" name="password" required minlength="10" type="password" autocomplete="new-password" placeholder="At least 10 characters">
+          </div>
+
+          <div class="field">
+            <label for="role">I'M JOINING AS A</label>
+            <select id="role" name="role" required>
+              <option value="" disabled selected>Choose your role</option>
+              <option value="pet_parent">Pet Parent 🐾</option>
+              <option value="veterinarian">Veterinarian 🩺</option>
+            </select>
+          </div>
+
+          <label class="terms-label">
+            <input id="terms" name="terms" required type="checkbox">
+            <span>I agree to woofy's terms & privacy policy.</span>
+          </label>
+
+          <p class="auth-role-note">Veterinarian accounts need administrator approval before they appear in parent booking and contact lists.</p>
+          <button class="btn btn-dark full" type="submit">Create my woofy account →</button>
+        </form>
+
+        <div class="switch">
+          Already have an account? <a href="login.html">Log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

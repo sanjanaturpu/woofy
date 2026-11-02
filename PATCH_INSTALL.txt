@@ -1,0 +1,35 @@
+WOOFY UPDATE PATCH — INSTALLATION
+
+This archive contains only changed and newly added files from the supplied
+WOOFY_.zip project. It does not contain a second copy of the full project.
+
+1. Make a backup copy of your current Woofy project folder.
+2. Extract this archive directly into the existing project folder.
+3. Allow Windows to replace the files with matching names.
+4. Keep your real .env file private. Copy .env.example to .env only if you
+   have not created .env yet, then fill in your own PostgreSQL credentials,
+   WOOFY_JWT_SECRET and WOOFY_ADMIN_SETUP_KEY.
+5. Install the updated Python dependencies:
+      pip install -r requirements-ai.txt
+6. Create a PostgreSQL database named woofy.
+7. Start the backend from the project root:
+      uvicorn backend.main:app --reload --port 8000
+
+IMPORTANT STATUS
+The backend now has PostgreSQL models, JWT/Argon2 authentication endpoints,
+role/ownership checks and the first set of data APIs. The existing dashboard
+JavaScript has not yet been migrated from localStorage to those APIs. Do not
+treat the dashboard as a cross-device, database-backed application yet.
+That frontend API migration is the next implementation stage.
+
+The first administrator is provisioned through POST /api/admin/bootstrap
+using the private WOOFY_ADMIN_SETUP_KEY header. The old browser-local admin
+creation flow has been removed, and the public login-page setup link is gone.
+
+Checks completed in this workspace:
+- Python source syntax compilation passed.
+- SQLAlchemy model mapping loaded and exposed 11 tables.
+- JavaScript syntax check passed.
+- HTML parsing and duplicate-ID checks passed for all five pages.
+- CSS brace-balance check passed.
+- PostgreSQL runtime and browser end-to-end tests were not run.

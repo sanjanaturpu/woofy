@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>woofy — Administrator provisioning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-art" style="background:var(--yellow)">
+        <div>
+          <a class="back-home" href="login.html">← back to login</a>
+          <h1>the woofy<br>control room. 🐾</h1>
+          <p>Administrator access is provisioned by the backend, not by browser storage.</p>
+        </div>
+        <div class="auth-emoji">🛠️✨</div>
+      </div>
+      <div class="auth-form">
+        <h2>admin provisioning.</h2>
+        <p>The first administrator must be created through the protected API bootstrap endpoint. This page does not create browser-local administrator accounts.</p>
+        <div class="form-hint" role="note">
+          <strong>For the project developer</strong>
+          <ol>
+            <li>Set <code>WOOFY_ADMIN_SETUP_KEY</code> in your private <code>.env</code> file.</li>
+            <li>Start the FastAPI server and open <code>http://127.0.0.1:8000/docs</code>.</li>
+            <li>Use <code>POST /api/admin/bootstrap</code> with the setup key in the <code>X-Woofy-Setup-Key</code> header.</li>
+            <li>After the first administrator exists, this endpoint refuses further bootstrap requests. Additional admins must be created by an authenticated administrator.</li>
+          </ol>
+        </div>
+        <div class="switch"><a href="login.html">Return to login</a></div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

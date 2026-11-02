@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>woofy — Log in</title>
+  <meta name="description" content="Log in to your woofy pet-care account.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-art" style="background:var(--blue)">
+        <div>
+          <a class="back-home" href="index.html">← back to woofy</a>
+          <h1>welcome<br>back, bestie. 🐾</h1>
+          <p>Your pet's world is waiting. Appointments, records, reminders and all the important little things.</p>
+        </div>
+        <div class="auth-emoji">🐾✨</div>
+      </div>
+
+      <div class="auth-form">
+        <h2>log in.</h2>
+        <p>Let's get your pet-care universe back open.</p>
+
+        <form id="loginForm">
+          <div class="field">
+            <label for="email">EMAIL</label>
+            <input id="email" name="email" required type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+
+          <div class="field">
+            <label for="password">PASSWORD</label>
+            <input id="password" name="password" required type="password" autocomplete="current-password" placeholder="Your password">
+          </div>
+
+          <div class="form-row">
+            <label class="remember-label"><input type="checkbox" name="remember"> Remember me</label>
+            <a href="#" id="forgotPassword">Forgot password?</a>
+          </div>
+
+          <button class="btn btn-dark full" type="submit">Log me in →</button>
+        </form>
+
+        <div class="switch">
+          New to woofy? <a href="register.html">Create an account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
